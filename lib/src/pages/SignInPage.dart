@@ -7,6 +7,11 @@ class SignInPage extends StatefulWidget {
 
 class _SignInPageState extends State<SignInPage>{
 
+  String _email;
+  String _password;
+  String _errorMessage;
+  
+  bool _isLoginForm;
   bool _isLoading;
 
   @override
@@ -59,6 +64,26 @@ class _SignInPageState extends State<SignInPage>{
           radius: 48.0,
           child: Image.asset('assets/flutter-icon.png'),
         ),
+      ),
+    );
+  }
+
+  Widget showEmailInput() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0.0, 100.0, 0.0, 0.0),
+      child: TextFormField(
+        maxLines: 1,
+        keyboardType: TextInputType.emailAddress,
+        autofocus: false,
+        decoration: InputDecoration(
+          hintText: 'Email',
+          icon: Icon(
+            Icons.email,
+            color: Colors.grey,
+          )
+        ),
+        validator: (value) => value.isEmpty ? 'Email can\'t be empty': null,
+        onSaved: (value) => _email = value.trim(),
       ),
     );
   }
