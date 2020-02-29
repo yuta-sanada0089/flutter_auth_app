@@ -10,7 +10,7 @@ class _SignInPageState extends State<SignInPage>{
   String _email;
   String _password;
   String _errorMessage;
-  
+
   bool _isLoginForm;
   bool _isLoading;
 
@@ -84,6 +84,26 @@ class _SignInPageState extends State<SignInPage>{
         ),
         validator: (value) => value.isEmpty ? 'Email can\'t be empty': null,
         onSaved: (value) => _email = value.trim(),
+      ),
+    );
+  }
+
+  Widget showPasswordInput() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
+      child: TextFormField(
+        maxLines: 1,
+        obscureText: true,
+        autofocus: false,
+        decoration: InputDecoration(
+          hintText: 'Password',
+          icon: Icon(
+            Icons.lock,
+            color: Colors.grey,
+          ),
+        ),
+        validator: (value) => value.isEmpty ? 'Password can\'t be empty' : null,
+        onSaved: (value) => _password = value.trim(),
       ),
     );
   }
