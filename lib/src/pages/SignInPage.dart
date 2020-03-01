@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_auth_app/src/service/authentication.dart';
 
 class SignInPage extends StatefulWidget {
+  SignInPage({this.auth, this.loginCallBack})
+
+  final BaseAuth auth;
+  final VoidCallback loginCallBack;
+
   @override
   State<StatefulWidget> createState() => _SignInPageState();
 }
 
 class _SignInPageState extends State<SignInPage>{
+
+  final _formKey = GlobalKey<FormState>();
 
   String _email;
   String _password;
@@ -13,6 +21,18 @@ class _SignInPageState extends State<SignInPage>{
 
   bool _isLoginForm;
   bool _isLoading;
+
+  void resetForm(){
+    _formKey.currentState.reset();
+    _errorMessage = "";
+  }
+
+  void toggleFormMode() {
+    resetForm();
+    setState(() {
+      _isLoginForm = !_isLoginForm;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -105,6 +125,16 @@ class _SignInPageState extends State<SignInPage>{
         validator: (value) => value.isEmpty ? 'Password can\'t be empty' : null,
         onSaved: (value) => _password = value.trim(),
       ),
+    );
+  }
+
+  Widget showSecondaryButton() {
+    return FlatButton(
+      child: Text(
+        _isLoginForm ? 'create an account' : 'Have an acount? Sign in',
+        style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w300),
+      ),
+      onPressed: toggleFormMode,
     );
   }
 }
